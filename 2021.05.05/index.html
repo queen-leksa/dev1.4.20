@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <script src="cars.js"></script>
+</head>
+<body>
+    <input type="search" placeholder="Find Car">
+    <ul id="list"></ul>
+    <script>
+        let search = document.body.firstElementChild;
+        let list = document.getElementById("list");
+        function showList(arr, txt = "") {
+            let local;
+            if (txt) {
+                // let a = /OL/i;
+                // let str = "trololo";
+                // console.log(a, str, a.test(str));
+                // console.log(a, str, str.search(a));
+                let reg = new RegExp(txt, "i");
+
+                let filterCars = arr.filter(el => {
+                    // if (el.toLowerCase().search(txt.toLowerCase()) !== -1) {
+                    //     return el;
+                    // }
+                    if (reg.test(el)) return el;
+                });
+                local = filterCars.map(el => `<li>${el}</li>`);
+            } else {
+                local = arr.map(el => `<li>${el}</li>`);
+            }
+            list.innerHTML = local.join("");
+        }
+        showList(cars);
+        search.addEventListener("input", function(e) {
+            showList(cars, e.target.value);
+        });
+    </script>
+</body>
+</html>
